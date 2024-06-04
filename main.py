@@ -2,6 +2,7 @@ from tkinter import *
 import pandas as pd
 from tkinter import messagebox
 import random
+import pyperclip
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -19,26 +20,17 @@ def generate_password():
     nr_symbols = 4
     nr_numbers = 8
 
-    # Eazy Level - Order not randomised:
-    # e.g. 4 letter, 2 symbol, 2 number = JduE&!91
     pass_entry.delete(0, END)
-    p1 = []
 
-    for i in range(0, nr_letters):
-        r = random.randint(0, len(letters) - 1)
-        p1.append(letters[r])
+    pass_letters = [random.choice(letters) for _ in range(nr_letters)]
+    pass_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
+    pass_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    password = pass_numbers + pass_letters + pass_symbols
 
-    for i in range(0, nr_symbols):
-        s = random.randint(0, len(symbols) - 1)
-        p1.append(symbols[s])
-
-    for i in range(0, nr_numbers):
-        n = random.randint(0, len(numbers) - 1)
-        p1.append(numbers[n])
-
-    random.shuffle(p1)
-    new_gen_password = ''.join(p1)
+    random.shuffle(password)
+    new_gen_password = ''.join(password)
     pass_entry.insert(0, new_gen_password)
+    pyperclip.copy(new_gen_password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
